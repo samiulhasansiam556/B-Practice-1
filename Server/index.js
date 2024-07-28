@@ -5,11 +5,14 @@ const server = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+require('dotenv').config()
+
+
 
 const mongoose = require('mongoose');
 main().catch(err => console.log(err));
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/demo');
+  await mongoose.connect(process.env.MONGODB_URL);
   console.log('Connected to MongoDB');
 }
 
