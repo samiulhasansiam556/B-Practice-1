@@ -44,7 +44,7 @@ function App() {
       <form onSubmit={handleSubmit}>
         <span>User Name:</span>
         <input type="text" required name="username" onChange={handleForm} />
-        <span>Password:</span>
+        <br/><span>Password: </span>
         <input type="password" required name="password" onChange={handleForm} />
         <button type="submit">Login</button>
       </form>
