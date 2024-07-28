@@ -46,6 +46,10 @@ server.get('/demo',async (req,res)=>{
     res.json(docs)
 })
 
+server.get('/test',async (req,res)=>{
+    res.json("This is test for render")
+})
+
 
 server.listen(8000,()=>{
     console.log('Server is running on port 8000')
