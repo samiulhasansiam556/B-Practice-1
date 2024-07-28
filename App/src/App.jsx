@@ -1,56 +1,49 @@
-import { useEffect, useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [form, setForm] = useState({});
-  const [users,setUsers] = useState([])
+  const url = import.meta.env.VITE_SERVER_URL;
 
-  
+  const [form, setForm] = useState({});
+  const [users, setUsers] = useState([]);
 
   const handleForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-     const response =  await fetch("http://localhost:8000/demo",{
+    const response = await fetch(`${url}/demo`, {
       method: "POST",
-      body:JSON.stringify(form),
+      body: JSON.stringify(form),
       headers: {
         "Content-Type": "application/json",
-        },
-    })
+      },
+    });
 
-   console.log(response)
     if (response.ok) {
       // Refresh the users list after a successful submission
       getUsers();
     }
-   };
+  };
 
-
-   const getUsers = async () =>{
-    const response = await fetch("http://localhost:8000/demo",{
+  const getUsers = async () => {
+    const response = await fetch(`${url}/demo`, {
       method: "GET",
-    })
+    });
     const data = await response.json();
-    setUsers(data)
-   };
-   
-   useEffect(()=>{
+    setUsers(data);
+  };
+
+  useEffect(() => {
     getUsers();
-   },[])
-
-
+  }, []);
 
   return (
     <>
       <form onSubmit={handleSubmit}>
         <span>User Name:</span>
-        <input type="text" required name="username" onChange={(e) => handleForm(e)} />
+        <input type="text" required name="username" onChange={handleForm} />
         <span>Password:</span>
         <input type="password" required name="password" onChange={handleForm} />
         <button type="submit">Login</button>
@@ -58,9 +51,9 @@ function App() {
 
       <div>
         <ul>
-          {users.map(user=>
+          {users.map(user => (
             <li key={user.id}>{user.username}</li>
-          )}
+          ))}
         </ul>
       </div>
     </>
